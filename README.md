@@ -404,3 +404,13 @@ Takes some amount of time for it to get its data ready to go
 - Tons of open source middleware exist
 - Most popular use of middleware is for dealing with async actions
 - We are going to use a middleware called '**redux-thunk**' to solve our async issues
+
+## Navigation with React Router
+### Bad navigation in React/Redux app
+Navigate around using `<a></a>` is a really bad practice in React/Redux app.  
+The reason is that when the browser receives index.html file from the server, the browser dumps the old html file **including React/Redux state data**
+
+### Navigating with React Router
+Use `<Link></Link>` in React/Redux app to navigate.
+
+- It prevents the browser from navigating to the new page and fetching new index.html file
