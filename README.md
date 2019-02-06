@@ -414,3 +414,32 @@ The reason is that when the browser receives index.html file from the server, th
 Use `<Link></Link>` in React/Redux app to navigate.
 
 - It prevents the browser from navigating to the new page and fetching new index.html file
+
+## Email/Password Authentication
+- Store a record in a database with the user's email and password
+- When the user tries to login, we compare email/pw with whats stored in DB
+- A user is 'logged in' when they enter the correct email/pw
+
+## OAuth-Based Authentication
+- User authentications with outside service provider (Google, Facebook, Twitter)
+- User authorizes our app to access their info
+- Outside provider tells us about the user
+- We are trusting the outside provider to correctly handle identification of a user
+- OAuth can be used for (1) user identification in our app and (2) our app making actions on behalf of user
+
+### OAuth for Servers
+- Results in a 'token' that a server can use to make requests on behalf of the user
+- Usually used when we have an app that needs to access user data **when they are not logged in**
+- Difficult to setup because we need to store a list of info about the user
+
+### OAuth for JS Browser App
+- Results in a 'token' that a browser app can use to make requests on behalf of the user
+- Usually used when we have an app that only needs to access user data **while they are logged in**
+- Very easy to setup thanks to Google's JS lib to automate flow
+
+### Steps for Setting Up OAuth (for Google)
+- Create a new project at console.developers.google.com/
+- Set up an OAuth confirmation screen
+- Generate an OAuth Client ID
+- Install Google's API library, initialize it with the OAuth Client ID
+- Make sure the lib gets called any time the user clicks on the 'Login with Google' button
