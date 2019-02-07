@@ -1,9 +1,9 @@
 import React from 'react'
 import { constants } from '../constants'
+import { connect } from 'react-redux'
+import { signIn, signOut } from '../actions'
 
 class GoogleAuth extends React.Component {
-  state = { isSigneedIn: null }
-
   componentDidMount() {
     // Initialize the client-side library JS codes to use it in the app
     window.gapi.load('client:auth2', () => {
@@ -13,18 +13,45 @@ class GoogleAuth extends React.Component {
       }).then(() => {
         // Generate this.auth and set component's state
         this.auth = window.gapi.auth2.getAuthInstance()
-        this.setState({ isSigneedIn: this.auth.isSigneedIn.get() })
+        this.onAuthChange(this.auth.isSignedIn.get())
+        this.auth.isSignedIn.listen(this.onAuthChange)
       })
     })
   }
 
-  renderAuthButton() {
-    if (this.state.isSigneedIn === null) {
-      return <div>I don't know if we're signed in.</div>
-    } else if (this.state.isSigneedIn) {
-      return <div>We're signed in.</div>
+  onAuthChange = (isSignedIn) => {
+    if (isSignedIn) {
+      this.props.signIn()
     } else {
-      return <div>We're not signed in.</div>
+      this.props.signOut()
+    } 
+  }
+
+  onSignInClick = () => {
+    this.auth.signIn(this.auth.currentUser.get().getId())
+  }
+
+  onSignOutClick = () => {
+    this.auth.signOut()
+  }
+
+  renderAuthButton() {
+    if (this.props.isSignedIn === null) {
+      return null
+    } else if (this.props.isSignedIn) {
+      return (
+        <button onClick={this.onSignOutClick} className="ui red google button">
+          <i className="google icon" />
+          Sign Out
+        </button>
+      )
+    } else {
+      return (
+        <button onClick={this.onSignInClick} className="ui red google button">
+          <i className="google icon" />
+          Sign In with Google
+        </button>
+      )
     }
   }
 
@@ -37,4 +64,11 @@ class GoogleAuth extends React.Component {
   }
 }
 
-export default GoogleAuth
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn }
+}
+
+export default connect(
+  mapStateToProps,
+  { signIn, signOut }
+)(GoogleAuth)

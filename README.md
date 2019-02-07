@@ -443,3 +443,25 @@ Use `<Link></Link>` in React/Redux app to navigate.
 - Generate an OAuth Client ID
 - Install Google's API library, initialize it with the OAuth Client ID
 - Make sure the lib gets called any time the user clicks on the 'Login with Google' button
+
+## Redux Form
+```
+renderInput(formProps) {
+	return (
+	  <input 
+	    onChange={formProps.input.onChange} 
+	    value={formProps.input.value} 
+	  />
+	)
+}
+
+// Shorthand 1
+renderInput(formProps) {
+	return <input {...formProps.input} />
+}
+
+// Shorthand 2
+renderInput({ input }) {
+	return <input {...input} />
+}
+```
