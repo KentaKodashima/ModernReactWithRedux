@@ -465,3 +465,28 @@ renderInput({ input }) {
 	return <input {...input} />
 }
 ```
+
+## REST APIs
+### Rest conventions
+Rest conventions, or restful conventions are a predefined system for defining different routes on an API that work with a given type of records.
+
+- Action  
+	1. List all records
+	2. Get one record
+	3. Create record
+	4. Update a record
+	5. Delete a record
+
+- Method  
+    1. GET
+    2. GET
+    3. POST
+    4. PUT
+    5. DELETE
+
+- Route
+    1. /streams
+    2. /streams:id/
+    3. /streams
+    4. /streams:id/
+    5. /streams:id/
