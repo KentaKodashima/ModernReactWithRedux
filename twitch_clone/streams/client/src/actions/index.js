@@ -22,9 +22,12 @@ export const signOut = () => {
   }
 }
 
-export const createStream = formValues => async dispatch => {
+export const createStream = formValues => async (dispatch, getState) => {
+  const { userId } = getState().auth
+
   // Make a POST request with axios and redux-thunk
-  const response = await streams.post('/streams', formValues)
+  // Add userId to the stream
+  const response = await streams.post('/streams', { ...formValues, userId })
 
   dispatch({ type: CREATE_STREAM, payload: response.data })
 }

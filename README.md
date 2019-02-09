@@ -490,3 +490,33 @@ Rest conventions, or restful conventions are a predefined system for defining di
     3. /streams
     4. /streams:id/
     5. /streams:id/
+
+## Array-based Reducer VS. Object-based Reducer
+```
+// Array-based
+const streamReducer = (state=[], action) => {
+  switch (action.type) {
+    case EDIT_STREAM:
+      return state.map(stream => {
+        if (stream.id === action.payload.id) {
+          return action.payload
+        } else {
+          return stream
+        }
+      })
+    default:
+      return state
+  }
+}
+
+// Object-based
+// Use [] for the key interpolation
+const streamReducer = (state={}, action) => {
+  switch (action.type) {
+    case EDIT_STREAM:
+      return { ...state, [action.payload.id]: action.payload }
+    default:
+      return state
+  }
+}
+```
