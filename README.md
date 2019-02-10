@@ -415,6 +415,8 @@ Use `<Link></Link>` in React/Redux app to navigate.
 
 - It prevents the browser from navigating to the new page and fetching new index.html file
 
+**NOTE:** With react-router, each component needs to be designed to work in isolation (fetch its own data)
+
 ## Email/Password Authentication
 - Store a record in a database with the user's email and password
 - When the user tries to login, we compare email/pw with whats stored in DB
@@ -490,6 +492,10 @@ Rest conventions, or restful conventions are a predefined system for defining di
     3. /streams
     4. /streams:id/
     5. /streams:id/
+
+**Note:**  
+PUT will update **all properties**.  
+PATCH will **some properties**.
 
 ## Array-based Reducer VS. Object-based Reducer
 ```

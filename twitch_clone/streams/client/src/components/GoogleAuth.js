@@ -13,6 +13,7 @@ class GoogleAuth extends React.Component {
       }).then(() => {
         // Generate this.auth and set component's state
         this.auth = window.gapi.auth2.getAuthInstance()
+        console.log(this.auth)
         this.onAuthChange(this.auth.isSignedIn.get())
         this.auth.isSignedIn.listen(this.onAuthChange)
       })
@@ -21,7 +22,7 @@ class GoogleAuth extends React.Component {
 
   onAuthChange = (isSignedIn) => {
     if (isSignedIn) {
-      this.props.signIn()
+      this.props.signIn(this.auth.currentUser.get().getId())
     } else {
       this.props.signOut()
     } 

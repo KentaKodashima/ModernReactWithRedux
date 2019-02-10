@@ -1,6 +1,38 @@
+import _ from 'lodash'
 import React from 'react'
+import { connect } from 'react-redux'
+import { fetchStream, editStream } from '../../actions'
+import StreamForm from './StreamForm'
 
-const StreamEd = () => {
-  return <div>StreamEdit</div>
+class StreamEdit extends React.Component {
+  componentDidMount() {
+    // Fetch the exact stream before the component's rendered
+    this.props.fetchStream(this.props.match.params.id)
+  }
+
+  onSubmit = (formValues) => {
+    this.props.editStream(this.props.match.params.id, formValues)
+  }
+
+  render() {
+    if (!this.props.stream) {
+      return <div>Loading</div>
+    } 
+    return (
+      <div>
+        <h3>Edit a stream</h3>
+        <StreamForm 
+          initialValues={_.pick(this.props.stream, 'title', 'description')}
+          onSubmit={this.onSubmit} 
+        />
+      </div>
+    )
+  }
 }
-export default StreamEd
+
+// Using ownProps, you can access the component's props
+const mapStateToProps = (state, ownProps) => {
+  return { stream: state.streams[ownProps.match.params.id] }
+}
+
+export default connect(mapStateToProps, { fetchStream, editStream })(StreamEdit)
