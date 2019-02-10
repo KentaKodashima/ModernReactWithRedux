@@ -526,3 +526,25 @@ const streamReducer = (state={}, action) => {
   }
 }
 ```
+
+## Portals
+Potal allows us to render some element not as a direct child. We can render that element or that component as a child of some other element inside of our HTML structure. (Most commonly the `<body>` tag.)
+
+- Use ReactDOM.createPortal() to create a modal
+- Need another `<div>` inside of the root index.html to place the modal directly to `<body>`
+
+```
+const Modal = props => {
+  return ReactDOM.createPortal(
+    <div className="ui dimmer modals visible active">
+      <div className="ui standard modal visible active">
+        fdafaweofjaoif
+      </div>
+    </div>,
+    document.querySelector('#modal')
+  )
+}
+```
+
+## React Fragment
+React fragment is a JSX looking element that allows us to return multiple elements to a single variable. When it gets rendered onto the screen, it doesn't produce any HTML. Therefore, it doesn't have any affects on CSS or something.
