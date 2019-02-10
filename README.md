@@ -417,6 +417,19 @@ Use `<Link></Link>` in React/Redux app to navigate.
 
 **NOTE:** With react-router, each component needs to be designed to work in isolation (fetch its own data)
 
+### Switch
+Only shows one route that is first found.
+
+```
+<Switch>
+	<Route path="/" exact component={StreamList} />
+	<Route path="/streams/new" exact component={StreamCreate} /> // First
+	<Route path="/streams/edit/:id" exact component={StreamEdit} />
+	<Route path="/streams/delete/:id" exact component={StreamDelete} />
+	<Route path="/streams/:id" exact component={StreamShow} /> // Second
+</Switch>
+```
+
 ## Email/Password Authentication
 - Store a record in a database with the user's email and password
 - When the user tries to login, we compare email/pw with whats stored in DB
@@ -548,3 +561,4 @@ const Modal = props => {
 
 ## React Fragment
 React fragment is a JSX looking element that allows us to return multiple elements to a single variable. When it gets rendered onto the screen, it doesn't produce any HTML. Therefore, it doesn't have any affects on CSS or something.
+
