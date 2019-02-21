@@ -36,7 +36,6 @@ class SongList extends Component {
 // Takes all states from the Redux store
 // Computates them to show as props inside of the React Component
 const mapStateToProps = state => {
-  console.log(state)
   return { songs: state.songs }
 }
 
