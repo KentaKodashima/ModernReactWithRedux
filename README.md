@@ -562,3 +562,50 @@ const Modal = props => {
 ## React Fragment
 React fragment is a JSX looking element that allows us to return multiple elements to a single variable. When it gets rendered onto the screen, it doesn't produce any HTML. Therefore, it doesn't have any affects on CSS or something.
 
+## Context System
+It allows us to get data from a parent component to any nested child component.
+
+### Context Object
+#### Two ways to get information into context object
+1. Default value
+2. Make the parent component `Provider`
+
+#### Two ways to get information out of context object
+1. `this.context`
+2. `Consumer`
+
+### Connecting a context to a component
+- Method 1
+```
+class Button extends React.Component {
+  static contextType = LanguageContext
+}
+```
+
+- Method 2
+```
+class Button extends React.Component {
+}
+Button.contextType = LanguageContext
+```
+
+### Provider
+Provides values to the child's context. It creates different pipe with a different values depending on the number of `<Provider>`
+```
+// First
+<LanguageContext.Provider value={this.state.language}>
+  <UserCreate />
+</LanguageContext.Provider>
+
+// Second (Separate from the first one)
+<LanguageContext.Provider value="english">
+  <UserCreate />
+</LanguageContext.Provider>
+```
+
+### Consumer
+```
+<LanguageContext.Consumer>
+  {(value) => value === 'english' ? 'Name' : 'Voorleggen'}
+</LanguageContext.Consumer>
+```
