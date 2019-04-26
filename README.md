@@ -609,3 +609,27 @@ Provides values to the child's context. It creates different pipe with a differe
   {(value) => value === 'english' ? 'Name' : 'Voorleggen'}
 </LanguageContext.Consumer>
 ```
+
+## Hooks
+Hooks are used to use state in functional components.
+
+### useState()
+`useState()` returns an array of two values which are a **state name** and **a named function to set a value to the state**. `const [resource, setResoource] = useState('posts')` uses the ES6 destructuring to extract the values and set `'posts'` as a default value.
+
+```
+import React, { useState } from 'react'
+
+const App = () => {
+  const [resource, setResoource] = useState('posts')
+
+  return (
+    <div>
+      <div>
+        <button onClick={() => setResoource('posts')}>Posts</button>
+        <button onClick={() => setResoource('todos')}>ToDos</button>
+      </div>
+      {resource}
+    </div>
+  )
+}
+```
