@@ -614,7 +614,7 @@ Provides values to the child's context. It creates different pipe with a differe
 Hooks are used to use state in functional components.
 
 ### useState()
-`useState()` returns an array of two values which are a **state name** and **a named function to set a value to the state**. `const [resource, setResoource] = useState('posts')` uses the ES6 destructuring to extract the values and set `'posts'` as a default value.
+`useState()` allows a functional component to use component-level state. `useState()` returns an array of two values which are a **state name** and **a named function to set a value to the state**. `const [resource, setResoource] = useState('posts')` uses the ES6 destructuring to extract the values and set `'posts'` as a default value.
 
 ```
 import React, { useState } from 'react'
@@ -632,4 +632,88 @@ const App = () => {
     </div>
   )
 }
+```
+
+### useEffect()
+`useEffect()` allows a functional component to use 'lifecycle methods'.
+
+```
+// [resource] means that if there is a change, make a request
+useEffect(() => {
+  fetchResource(resource)
+}, [resource])
+```
+
+The code which causes infinite loop.
+
+```
+async componentDidMount() {
+  const response = await axios.get(`https://jsonplaceholder.typicode.com/${this.props.resource}`)
+
+  this.setState({ resources: response.data })
+}
+
+async componentDidUpdate(prevProps, prevState, snapshot) {
+  if (prevProps.resource !== this.props.resource) {
+	 const response = await axios.get(`https://jsonplaceholder.typicode.com/${this.props.resource}`)
+	
+	 this.setState({ resources: response.data })
+  }
+}
+```
+
+A better way using `useEffect()`
+
+```
+const [resources, setResoources] = useState([])
+
+const fetchResource = async (resource) => {
+  const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`)
+
+  setResoources(response.data)
+}
+
+useEffect(() => {
+  fetchResource(resource)
+}, [resource])
+```
+
+#### How useEffect() works
+```
+// Equal to componentDidMount()
+useEffect(() => {}, []) 
+
+// Control how many times the callback gets called
+useEffect(() => {}, [1]) 
+```
+
+**NOTE:** The callback of `useEfect()` itself cannot be `async`.
+```
+// Correct: Separate function
+const fetchResource = async (resource) => {
+  const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`)
+
+  setResoources(response.data)
+}
+
+useEffect(() => {
+  fetchResource(resource)
+}, [resource])
+
+// Correct: Invoking immediately
+useEffect(() => {
+  (async resource => {
+    const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`)
+    
+    setResources(response.data)
+  })(resource)
+}, [resource])
+
+
+// Wrong
+useEffect( async () => {
+  const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`)
+  
+   setResoources(response.data)
+}, [resource])
 ```
